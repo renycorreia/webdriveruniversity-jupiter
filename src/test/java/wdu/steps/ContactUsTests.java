@@ -11,6 +11,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import wdu.utils.GenericsUtils;
 
 import java.time.Duration;
 
@@ -21,6 +22,7 @@ import static wdu.pages.HomePage.pagContact;
 public class ContactUsTests {
     public WebDriver driver;
 
+    //region Hooks
     @Before
     public void setUp(){
         WebDriverManager.chromedriver().setup();
@@ -45,7 +47,9 @@ public class ContactUsTests {
     public void tearDown(){
         driver.quit();
     }
+    //endregion
 
+    //region Given
     @Dado("que estou na página contato")
     public void queEstouNaPaginaContato() {
         pagContact(driver).click();
@@ -57,11 +61,80 @@ public class ContactUsTests {
     public void queNaoPreenchoNenhumCampoDoFormulario() {
     }
 
+    @Dado("que preencho apenas o campo {string} do formulário")
+    public void quePreenchoApenasOCampoCampoDoFormulario(String nomeCampo) {
+
+        switch (nomeCampo){
+            case "First Name":
+                cmpFirstName(driver).click();
+                cmpFirstName(driver).clear();
+                cmpFirstName(driver).sendKeys(GenericsUtils.pessoa().getPrimeiroNome());
+                break;
+            case "Last Name":
+                cmpLastName(driver).click();
+                cmpLastName(driver).clear();
+                cmpLastName(driver).sendKeys(GenericsUtils.pessoa().getUltimoNome());
+                break;
+            case "Email Address":
+                cmpEmail(driver).click();
+                cmpEmail(driver).clear();
+                cmpEmail(driver).sendKeys(GenericsUtils.pessoa().getEmail());
+                break;
+            case "Comments":
+                cmpComment(driver).click();
+                cmpComment(driver).clear();
+                cmpComment(driver).sendKeys(GenericsUtils.faker.lorem().fixedString(20));
+                break;
+        }
+    }
+
+    @Dado("que não preencho o campo {string} do formulário")
+    public void queNaoPreenchoOCampoCampoDoFormulario(String nomeCampo) {
+
+        cmpFirstName(driver).click();
+        cmpFirstName(driver).clear();
+        cmpFirstName(driver).sendKeys(GenericsUtils.pessoa().getPrimeiroNome());
+
+        cmpLastName(driver).click();
+        cmpLastName(driver).clear();
+        cmpLastName(driver).sendKeys(GenericsUtils.pessoa().getUltimoNome());
+
+        cmpEmail(driver).click();
+        cmpEmail(driver).clear();
+        cmpEmail(driver).sendKeys(GenericsUtils.pessoa().getEmail());
+
+        cmpComment(driver).click();
+        cmpComment(driver).clear();
+        cmpComment(driver).sendKeys(GenericsUtils.faker.lorem().fixedString(20));
+
+        switch (nomeCampo){
+            case "First Name":
+                cmpFirstName(driver).click();
+                cmpFirstName(driver).clear();
+                break;
+            case "Last Name":
+                cmpLastName(driver).click();
+                cmpLastName(driver).clear();
+                break;
+            case "Email Address":
+                cmpEmail(driver).click();
+                cmpEmail(driver).clear();
+                break;
+            case "Comments":
+                cmpComment(driver).click();
+                cmpComment(driver).clear();
+                break;
+        }
+    }
+    //endregion
+
+    //region When
     @Quando("clico no botão SUBMIT")
     public void clicoNoBotaoSUBMIT() {
         btnSubmit(driver).click();
-    }
+    }//endregion
 
+    //region Then
     @Entao("é exibida a mensagem de erro")
     public void eExibidaAMensagemDeErro(String msg) {
         String bodyError = tagBody(driver).getText();
@@ -69,4 +142,11 @@ public class ContactUsTests {
         assertEquals(msg, bodyError);
     }
 
+    @Entao("é exibida a mensagem de erro {string}")
+    public void eExibidaAMensagemDeErroMsg(String msg) {
+        String bodyError = tagBody(driver).getText();
+
+        assertEquals(msg, bodyError);
+    }
+    //endregion
 }

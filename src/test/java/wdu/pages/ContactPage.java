@@ -22,6 +22,11 @@ public class ContactPage {
         return element;
     }
 
+    public static WebElement cmpComment(WebDriver driver) {
+        element = driver.findElement(By.name("message"));
+        return element;
+    }
+
     public static WebElement btnSubmit(WebDriver driver) {
         element = driver.findElement(By.cssSelector("[value='SUBMIT']"));
         return element;
