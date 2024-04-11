@@ -38,3 +38,13 @@
         | "Last Name"     | "Error: all fields are required" |
         | "Email Address" | "Error: all fields are required\nError: Invalid email address" |
         | "Comments"      | "Error: all fields are required" |
+
+
+    @sucesso
+    Cenario: Enviar formulário de contato com todos os campos preenchidos
+      Dado que preencho todos os campos do formulário
+      Quando clico no botão SUBMIT
+      Entao o formulário é enviado com sucesso, exibindo a mensagem de confirmação
+      """
+      Thank You for your Message!
+      """

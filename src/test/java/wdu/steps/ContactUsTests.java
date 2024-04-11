@@ -11,11 +11,10 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import wdu.utils.GenericsUtils;
 
 import java.time.Duration;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static wdu.pages.ContactPage.*;
 import static wdu.pages.HomePage.pagContact;
 
@@ -63,68 +62,34 @@ public class ContactUsTests {
 
     @Dado("que preencho apenas o campo {string} do formulário")
     public void quePreenchoApenasOCampoCampoDoFormulario(String nomeCampo) {
-
-        switch (nomeCampo){
-            case "First Name":
-                cmpFirstName(driver).click();
-                cmpFirstName(driver).clear();
-                cmpFirstName(driver).sendKeys(GenericsUtils.pessoa().getPrimeiroNome());
-                break;
-            case "Last Name":
-                cmpLastName(driver).click();
-                cmpLastName(driver).clear();
-                cmpLastName(driver).sendKeys(GenericsUtils.pessoa().getUltimoNome());
-                break;
-            case "Email Address":
-                cmpEmail(driver).click();
-                cmpEmail(driver).clear();
-                cmpEmail(driver).sendKeys(GenericsUtils.pessoa().getEmail());
-                break;
-            case "Comments":
-                cmpComment(driver).click();
-                cmpComment(driver).clear();
-                cmpComment(driver).sendKeys(GenericsUtils.faker.lorem().fixedString(20));
-                break;
-        }
+        limpaFormulario(driver);
+        preencheCampos(driver, nomeCampo);
     }
 
     @Dado("que não preencho o campo {string} do formulário")
     public void queNaoPreenchoOCampoCampoDoFormulario(String nomeCampo) {
-
-        cmpFirstName(driver).click();
-        cmpFirstName(driver).clear();
-        cmpFirstName(driver).sendKeys(GenericsUtils.pessoa().getPrimeiroNome());
-
-        cmpLastName(driver).click();
-        cmpLastName(driver).clear();
-        cmpLastName(driver).sendKeys(GenericsUtils.pessoa().getUltimoNome());
-
-        cmpEmail(driver).click();
-        cmpEmail(driver).clear();
-        cmpEmail(driver).sendKeys(GenericsUtils.pessoa().getEmail());
-
-        cmpComment(driver).click();
-        cmpComment(driver).clear();
-        cmpComment(driver).sendKeys(GenericsUtils.faker.lorem().fixedString(20));
+        limpaFormulario(driver);
+        preencheTodosOsCampos(driver);
 
         switch (nomeCampo){
             case "First Name":
-                cmpFirstName(driver).click();
                 cmpFirstName(driver).clear();
                 break;
             case "Last Name":
-                cmpLastName(driver).click();
                 cmpLastName(driver).clear();
                 break;
             case "Email Address":
-                cmpEmail(driver).click();
                 cmpEmail(driver).clear();
                 break;
             case "Comments":
-                cmpComment(driver).click();
                 cmpComment(driver).clear();
                 break;
         }
+    }
+
+    @Dado("que preencho todos os campos do formulário")
+    public void quePreenchoTodosOsCamposDoFormulario() {
+        preencheTodosOsCampos(driver);
     }
     //endregion
 
@@ -137,16 +102,25 @@ public class ContactUsTests {
     //region Then
     @Entao("é exibida a mensagem de erro")
     public void eExibidaAMensagemDeErro(String msg) {
-        String bodyError = tagBody(driver).getText();
+        String bodyError = tagBodyErro(driver).getText();
 
         assertEquals(msg, bodyError);
     }
 
     @Entao("é exibida a mensagem de erro {string}")
     public void eExibidaAMensagemDeErroMsg(String msg) {
-        String bodyError = tagBody(driver).getText();
+        String bodyError = tagBodyErro(driver).getText();
 
         assertEquals(msg, bodyError);
+    }
+
+    @Entao("o formulário é enviado com sucesso, exibindo a mensagem de confirmação")
+    public void oFormularioEEnviadoComSucessoExibindoAMensagemDeConfirmacao(String msg) {
+        String h1Sucesso = tagH1Sucesso(driver).getText();
+        String url = driver.getCurrentUrl();
+
+        assertTrue(url.contains("/Contact-Us/contact-form-thank-you.html"));
+        assertEquals(msg, h1Sucesso);
     }
     //endregion
 }

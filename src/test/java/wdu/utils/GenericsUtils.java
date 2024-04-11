@@ -10,7 +10,7 @@ public class GenericsUtils {
 
     public static Faker faker = new Faker(new Locale("pt_BR"));
 
-    public static Pessoa pessoa()
+    public static Pessoa retornaPessoa()
     {
         Pessoa pessoa = new Pessoa();
 
