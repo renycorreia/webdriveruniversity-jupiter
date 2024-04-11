@@ -39,10 +39,19 @@
         | "Email Address" | "Error: all fields are required\nError: Invalid email address" |
         | "Comments"      | "Error: all fields are required" |
 
+    @exceção
+    Cenário: Enviar formulário de contato com e-mail em formato inválido
+      Dado que preencho todos os campos do formulário corretamente
+      Mas preencho o campo e-mail com um valor no formato inválido
+      Quando clico no botão SUBMIT
+      Entao é exibida a mensagem de erro
+      """
+      Error: Invalid email address
+      """
 
     @sucesso
     Cenario: Enviar formulário de contato com todos os campos preenchidos
-      Dado que preencho todos os campos do formulário
+      Dado que preencho todos os campos do formulário corretamente
       Quando clico no botão SUBMIT
       Entao o formulário é enviado com sucesso, exibindo a mensagem de confirmação
       """

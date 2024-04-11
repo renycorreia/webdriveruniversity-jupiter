@@ -2,6 +2,7 @@ package wdu.steps;
 
 import io.cucumber.java.pt.Dado;
 import io.cucumber.java.pt.Entao;
+import io.cucumber.java.pt.Mas;
 import io.cucumber.java.pt.Quando;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -64,9 +65,15 @@ public class ContactUsTests {
         }
     }
 
-    @Dado("que preencho todos os campos do formulário")
-    public void quePreenchoTodosOsCamposDoFormulario() {
+    @Dado("que preencho todos os campos do formulário corretamente")
+    public void quePreenchoTodosOsCamposDoFormularioCorretamente() {
         preencheTodosOsCampos(driver);
+    }
+
+    @Mas("preencho o campo e-mail com um valor no formato inválido")
+    public void preenchoOCampoEMailComUmValorNoFormatoInvalido() {
+        cmpEmail(driver).clear();
+        cmpEmail(driver).sendKeys("mail@mail");
     }
     //endregion
 

@@ -53,50 +53,32 @@ public class ContactPage {
 
     public static void preencheCampos(WebDriver driver, String nomeCampo)
     {
+        Pessoa p = retornaPessoa();
+
         switch (nomeCampo){
             case "First Name":
-                preencheNome(driver, GenericsUtils.retornaPessoa().getPrimeiroNome());
+                cmpFirstName(driver).sendKeys(p.getPrimeiroNome());
                 break;
             case "Last Name":
-                preencheSobrenome(driver, GenericsUtils.retornaPessoa().getUltimoNome());
+                cmpLastName(driver).sendKeys(p.getUltimoNome());
                 break;
             case "Email Address":
-                preencheEmail(driver, GenericsUtils.retornaPessoa().getEmail());
+                cmpEmail(driver).sendKeys(p.getEmail());
                 break;
             case "Comments":
-                preencheComentario(driver, GenericsUtils.faker.lorem().fixedString(100));
+                cmpComment(driver).sendKeys(GenericsUtils.faker.lorem().fixedString(100));
                 break;
         }
-    }
-
-    public static void preencheNome(WebDriver driver, String valor)
-    {
-        cmpFirstName(driver).sendKeys(valor);
-    }
-
-    public static void preencheSobrenome(WebDriver driver, String valor)
-    {
-        cmpLastName(driver).sendKeys(valor);
-    }
-
-    public static void preencheEmail(WebDriver driver, String valor)
-    {
-        cmpEmail(driver).sendKeys(valor);
-    }
-
-    public static void preencheComentario(WebDriver driver, String valor)
-    {
-        cmpComment(driver).sendKeys(valor);
     }
 
     public static void preencheTodosOsCampos(WebDriver driver)
     {
         Pessoa p = retornaPessoa();
 
-        preencheNome(driver, p.getPrimeiroNome());
-        preencheSobrenome(driver, p.getUltimoNome());
-        preencheEmail(driver, p.getEmail());
-        preencheComentario(driver, GenericsUtils.faker.lorem().fixedString(100));
+        cmpFirstName(driver).sendKeys(p.getPrimeiroNome());
+        cmpLastName(driver).sendKeys(p.getUltimoNome());
+        cmpEmail(driver).sendKeys(p.getEmail());
+        cmpComment(driver).sendKeys(GenericsUtils.faker.lorem().fixedString(100));
     }
 
     public static void limpaFormulario(WebDriver driver)
