@@ -81,7 +81,13 @@ public class ContactUsTests {
     @Quando("clico no botão SUBMIT")
     public void clicoNoBotaoSUBMIT() {
         btnSubmit(driver).click();
-    }//endregion
+    }
+
+    @Quando("clico no botão RESET")
+    public void clicoNoBotaoRESET() {
+        btnReset(driver).click();
+    }
+    //endregion
 
     //region Then
     @Entao("é exibida a mensagem de erro")
@@ -106,5 +112,19 @@ public class ContactUsTests {
         assertTrue(url.contains("/Contact-Us/contact-form-thank-you.html"));
         assertEquals(msg, h1Sucesso);
     }
+
+    @Entao("todos os campos do formulá são limpos novamente")
+    public void todosOsCamposDoFormulaSaoLimposNovamente() {
+        String nome = cmpFirstName(driver).getText();
+        String sobrenome = cmpLastName(driver).getText();
+        String email = cmpEmail(driver).getText();
+        String comentario = cmpComment(driver).getText();
+
+        assertEquals("", nome);
+        assertEquals("", sobrenome);
+        assertEquals("", email);
+        assertEquals("", comentario);
+    }
+
     //endregion
 }

@@ -57,3 +57,10 @@
       """
       Thank You for your Message!
       """
+
+    @sucesso
+    Cenario: Limpar todos os campos do formulário
+      Dado que preencho todos os campos do formulário corretamente
+      Quando clico no botão RESET
+      Entao todos os campos do formulá são limpos novamente
+
