@@ -1,8 +1,6 @@
-package wdu.bases;
+package wdu.helpers;
 
-import io.cucumber.java.After;
-import io.cucumber.java.Before;
-import io.github.bonigarcia.wdm.WebDriverManager;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -11,12 +9,13 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import java.time.Duration;
 
 @Getter
-public abstract class TestBase {
+@AllArgsConstructor
+public class WebDriverHelper {
 
-    public WebDriver driver;
-    @Before
-    public void setUp(){
-        WebDriverManager.chromedriver().setup();
+    public static WebDriver driver;
+
+    public static void setUp(){
+        io.github.bonigarcia.wdm.WebDriverManager.chromedriver().setup();
         ChromeOptions options = new ChromeOptions();
 
         boolean isHeadless = Boolean.parseBoolean(System.getProperty("HEADLESS"));
@@ -34,9 +33,7 @@ public abstract class TestBase {
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
     }
 
-    @After
-    public void tearDown(){
+    public static void tearDown(){
         driver.quit();
     }
-
 }
