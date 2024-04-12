@@ -34,10 +34,6 @@ public class ContactUsTests {
         driver.switchTo().window(driver.getWindowHandles().toArray()[1].toString());
     }
 
-    @Dado("que não preencho nenhum campo do formulário")
-    public void queNaoPreenchoNenhumCampoDoFormulario() {
-    }
-
     @Dado("que preencho apenas o campo {string} do formulário")
     public void quePreenchoApenasOCampoCampoDoFormulario(String nomeCampo) {
         limpaFormulario(driver);

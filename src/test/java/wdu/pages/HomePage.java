@@ -12,5 +12,10 @@ public class HomePage {
         return element;
     }
 
+    public static WebElement pagLogin(WebDriver driver) {
+        element = driver.findElement(By.id("login-portal"));
+        return element;
+    }
+
 }
 
